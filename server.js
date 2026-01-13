@@ -24,14 +24,14 @@ app.get('/', (req, res) => {
                     socket.emit('comando_admin', { cor, luz });
                 }
                 function strobe() {
-                    let on = true;
-                    let count = 0;
-                    let i = setInterval(() => {
-                        enviar(on ? '#FFFFFF' : '#000000', on);
-                        on = !on;
-                        if(count++ > 20) clearInterval(i);
-                    }, 100);
-                }
+    let on = true;
+    let count = 0;
+    let i = setInterval(() => {
+        enviar(on ? '#FFFFFF' : '#000000', on);
+        on = !on;
+        if(count++ > 10) clearInterval(i); // Reduzi para 10 piscadas mais lentas
+    }, 200); // Mudei de 100 para 200ms
+}
             </script>
         </body>
     `);
@@ -43,5 +43,6 @@ io.on('connection', (socket) => {
         io.emit('comando_show', data); // Envia para todos os celulares no GitHub
     });
 });
+
 
 server.listen(process.env.PORT || 3000, () => console.log('Servidor rodando!'));
